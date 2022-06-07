@@ -9,30 +9,30 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     </head>
     <body>
-        <main class="container">
+        <%@include file="../menubar.jsp" %>
+        <main class="container"></main>
             <h1>Gêneros</h1>
-            <a href="/genero/insert" class="btn btn-primary">Novo Gênero</a>
-            <hr />
+            <a class="btn btn-primary" href="/genero/insert">Novo Gênero</a>
+            
             <table class="table">
-                <thead>
+                
                     <tr>
                         <th>Id</th>
                         <th>Nome</th>
                         <th>&nbsp;</th>
                     </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="g" items="${generos}">
+                
+                <c:forEach var="g" items="${generos}">
                         <tr>
                             <td>${g.id}</td>
                             <td>${g.nome}</td>
                             <td>
-                                <a href="/genero/update/${g.id}" class="btn btn-primary">Editar</a>
-                                <a href="/genero/delete/${g.id}" class="btn btn-danger">Remover</a>
+                                <a href="/generos/update/${g.id}" class="btn btn-info">Editar</a>
+                                <a href="/generos/delete/${g.id}" class="btn btn-danger">Remover</a>
                             </td>
                         </tr>
                     </c:forEach>
-                </tbody>
+                
             </table>
         </main>
 
