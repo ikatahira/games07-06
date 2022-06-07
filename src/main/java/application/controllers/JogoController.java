@@ -1,8 +1,6 @@
 package application.controllers;
 
 import java.util.Optional;
-import java.util.Set;
-import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,13 +21,13 @@ import application.repositories.PlataformaRepository;
 @RequestMapping("/jogos")
 public class JogoController {
     @Autowired
-    private JogoRepository jogosRepo;
+    public JogoRepository jogosRepo;
 
     @Autowired
-    private GeneroRepository generosRepo;
+    public GeneroRepository generosRepo;
 
     @Autowired
-    private PlataformaRepository plataformasRepo;
+    public PlataformaRepository plataformasRepo;
 
     @RequestMapping("list")
     public String list(Model model) {
@@ -45,8 +43,7 @@ public class JogoController {
     }
 
     @RequestMapping(value = "insert", method = RequestMethod.POST)
-    public String saveInsert(@RequestParam("titulo") String titulo,@RequestParam("genero") int generoId,
-    @RequestParam("plataformas")int [] plataformas) {
+    public String saveInsert(@RequestParam("titulo") String titulo,@RequestParam("genero") int generoId, @RequestParam("plataformas")int [] plataformas) {
         Jogo jogo = new Jogo();
         jogo.setTitulo(titulo);
         jogo.setGenero(generosRepo.findById(generoId).get());
@@ -75,27 +72,6 @@ public class JogoController {
         return "/jogos/update.jsp";
             
     
-    }
-
-    @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String saveUpdate(@RequestParam("titulo") String titulo, @RequestParam("id") int id,
-    @RequestParam("genero") int generoId, @RequestParam(name="plataformas", required =false)int[] plafaformas) {
-        Optional<Jogo> jogo = jogosRepo.findById(id);
-        if(!jogo.isPresent())
-            return "redirect:/jogos/list";
-        jogo.get().setTitulo(titulo);
-        jogo.get().setGenero(generosRepo.findById(generoId).get());
-        Set<Plataforma> updatePlataforma = new HashSet<>();
-        
-        if(plataformas!=null)
-            for(int p: plataformas){
-                Optional<Plataforma> plataforma = plataformasRepo.findById(p);
-                if(plataforma.isPresent())
-                    updatePlataforma.add(plataforma.get());
-            }
-        jogo.get().setPlataformas(updatePlataforma);
-        jogosRepo.save(jogo.get());
-        return "redirect:/jogos/list";
     }
 
     @RequestMapping("delete/{id}")
