@@ -17,7 +17,7 @@ public class Genero {
     private int id;
     private String nome;
 
-    @OneToMany(mappedBy = "generos")
+    @OneToMany(mappedBy ="genero")
     private Set<Jogo> jogos = new HashSet<>();
 
     public void setId(int id) {
